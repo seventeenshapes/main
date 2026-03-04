@@ -17,9 +17,6 @@
         body { 
             font-family: 'Montserrat', sans-serif; 
             background-color: var(--bg);
-            /*Pre zachovanie úplnosti stránky, kód hľadá súbor pattern.png.Ak ho nemáš, pozadie bude len čierne. */
-            background-image: url('pattern.png'); 
-            background-repeat: repeat;
             color: white; 
             margin: 0; 
             overflow-x: hidden;
@@ -32,10 +29,10 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            /* Tento funkčný odkaz z pôvodného kódu som ponechal, aby stránka fungovala okamžite po skopírovaní. */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4), var(--bg)), 
-                        url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1920'); 
-            background-size: cover;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), var(--bg)), 
+                              url('pictures/fot_grad.png'); 
+            background-repeat: repeat;
+            background-size: 110px; 
             background-attachment: fixed;
         }
 
@@ -49,7 +46,7 @@
             align-items: center;
             gap: 60px;
             max-width: 1200px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto;
         }
 
         .about-photo {
@@ -57,44 +54,21 @@
             width: 280px;
             height: 280px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
-            background: #111;
+            border: 1px solid rgba(255,255,255,0.1);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        /*Pre zachovanie úplnosti stránky, kód hľadá súbor profilovka.jpg.Nakoľko si mi neposkytol fotku pre profil, priradil som tam tvoj upravený obrázok (image_1.png) ako placeholder, aby stránka vyzerala kompletne.Keď budeš mať vlastnú profilovku, nahraď ju. */
         .about-photo img { width: 100%; height: 100%; object-fit: cover; }
 
-        .about-text {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            font-weight: 300;
-            max-width: 500px;
-            color: #ccc;
-        }
+        .about-text { font-size: 1.15rem; line-height: 1.7; font-weight: 300; color: #ccc; max-width: 500px; }
 
-        h2 {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            display: flex;
-            align-items: center;
-            text-transform: uppercase;
-        }
-
-        h2::after {
-            content: "";
-            height: 2px;
-            flex-grow: 1;
-            background: var(--accent);
-            margin-left: 20px;
-        }
+        h2 { font-size: 2.5rem; margin-bottom: 50px; display: flex; align-items: center; text-transform: uppercase; }
+        h2::after { content: ""; height: 2px; flex-grow: 1; background: var(--accent); margin-left: 20px; }
 
         .main-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
-            height: 450px;
         }
 
         .category-card {
@@ -104,28 +78,20 @@
             cursor: pointer;
             transition: 0.4s ease;
             border: 1px solid rgba(255,255,255,0.1);
+            height: 400px;
         }
-
         .category-card:hover { transform: scale(1.02); border-color: var(--accent); }
-        .category-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.5s; }
-        .category-card:hover img { opacity: 0.8; }
+        .category-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; transition: 0.5s; }
+        .category-card:hover img { opacity: 0.7; }
 
-        .card-label {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            z-index: 2;
-        }
-
+        .card-label { position: absolute; bottom: 30px; left: 30px; }
         .card-label h3 { font-size: 1.5rem; margin: 0; text-transform: uppercase; }
         .card-label p { color: var(--accent); letter-spacing: 2px; font-weight: bold; font-size: 0.8rem; margin: 5px 0 0 0; }
 
+        /* --- OVERLAY & SLIDER --- */
         .overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg);
             z-index: 1000;
             display: none;
@@ -138,54 +104,41 @@
 
         .close-btn {
             position: fixed;
-            top: 30px;
-            right: 50px;
-            font-size: 1rem;
-            color: white;
+            top: 30px; right: 50px;
             background: var(--accent);
-            padding: 10px 20px;
+            padding: 10px 25px;
             border-radius: 50px;
             cursor: pointer;
             z-index: 1001;
             font-weight: 900;
         }
 
-        /* --- ZDVIHNIUTY BEFORE/AFTER SLIDER --- */
         .comparison-slider {
             position: relative;
             width: 100%;
             max-width: 1000px;
-            margin: 40px auto;
+            margin: 40px auto 80px auto; 
             aspect-ratio: 16 / 9;
             overflow: hidden;
             border-radius: 15px;
             border: 1px solid #333;
-            user-select: none;
         }
 
         .comparison-slider img {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
-            display: block;
             pointer-events: none;
         }
 
-        /*Simulačný filter som z tohto prvku odstránil, nakoľko si mi poskytol skutočný 'pale' obrázok (image_0.png). */
-        #log-image {
+        .log-image-overlay {
             z-index: 2;
             clip-path: inset(0 50% 0 0); 
         }
 
         .slider-line {
             position: absolute;
-            top: 0;
-            left: 50%;
-            width: 4px;
-            height: 100%;
+            top: 0; left: 50%; width: 4px; height: 100%;
             background: var(--accent);
             z-index: 5;
             transform: translateX(-50%);
@@ -194,28 +147,41 @@
 
         .slider-input {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: transparent;
             opacity: 0;
             cursor: ew-resize;
             z-index: 10;
-            margin: 0;
+        }
+
+        /* --- PLYNULÁ ANIMÁCIA (EASE-IN-OUT) --- */
+        .wiggle-effect .slider-line {
+            animation: lineWiggle 1.8s cubic-bezier(0.45, 0, 0.55, 1);
+        }
+
+        .wiggle-effect .log-image-overlay {
+            animation: clipWiggle 1.8s cubic-bezier(0.45, 0, 0.55, 1);
+        }
+
+        @keyframes lineWiggle {
+            0% { left: 50%; }
+            30% { left: 70%; }
+            60% { left: 30%; }
+            100% { left: 50%; }
+        }
+
+        @keyframes clipWiggle {
+            0% { clip-path: inset(0 50% 0 0); }
+            30% { clip-path: inset(0 30% 0 0); }
+            60% { clip-path: inset(0 70% 0 0); }
+            100% { clip-path: inset(0 50% 0 0); }
         }
 
         .slider-label {
-            position: absolute;
-            bottom: 20px;
-            padding: 5px 15px;
-            background: rgba(0,0,0,0.7);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            z-index: 6;
-            pointer-events: none;
-            border-radius: 5px;
+            position: absolute; bottom: 20px; padding: 5px 15px;
+            background: rgba(0,0,0,0.7); font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 2px; z-index: 6;
+            pointer-events: none; border-radius: 5px;
         }
         .label-before { left: 20px; color: var(--accent); }
         .label-after { right: 20px; }
@@ -225,16 +191,12 @@
             padding: 50px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
         }
-
-        input, textarea { width: 100%; padding: 15px; margin-bottom: 20px; background: #111; border: 1px solid #333; color: white; border-radius: 5px; outline: none; }
+        input, textarea { width: 100%; padding: 15px; margin-bottom: 20px; background: #111; border: 1px solid #333; color: white; border-radius: 5px; }
         .btn { background: var(--accent); color: white; padding: 15px 40px; border: none; font-weight: bold; cursor: pointer; border-radius: 50px; }
 
-        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr 1fr; height: auto; } .category-card { height: 350px; } }
         @media (max-width: 900px) { 
-            .about-container { flex-direction: column; text-align: center; gap: 30px; }
-            .about-text { max-width: 100%; }
+            .about-container { flex-direction: column; text-align: center; }
             .main-grid { grid-template-columns: 1fr; } 
         }
     </style>
@@ -252,7 +214,7 @@
             <img src="profilovka.jpg" alt="Pavol Kadlečík">
         </div>
         <div class="about-text">
-            Moje meno je Pavol a som študent Strednej priemyselnej školy elektrotechnickej v Piešťanoch. Zaoberám sa videotvorbou, najmä farbením a strihom videa v DaVinci Resolve Studio, ale zvládnem aj samotné nahrávanie a fotenie.
+            Moje meno je Pavol a som študent SPŠE v Piešťanoch. Zaoberám sa videotvorbou, farbením v DaVinci Resolve a nahrávaním vizuálneho obsahu.
         </div>
     </div>
 </section>
@@ -264,24 +226,16 @@
             <img src="https://images.unsplash.com/photo-1535016120720-40c646bebbbb?auto=format&fit=crop&w=800">
             <div class="card-label">
                 <h3>Color Grading</h3>
-                <p>Zobraziť portfólio</p>
+                <p>Zobraziť porovnanie</p>
             </div>
         </div>
-        
         <div class="category-card" onclick="openOverlay('video-content')">
             <img src="https://images.unsplash.com/photo-1492691523567-30730024d051?auto=format&fit=crop&w=800">
-            <div class="card-label">
-                <h3>Video Produkcia</h3>
-                <p>Zobraziť portfólio</p>
-            </div>
+            <div class="card-label"><h3>Video Produkcia</h3><p>V príprave</p></div>
         </div>
-
         <div class="category-card" onclick="openOverlay('foto-content')">
             <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800">
-            <div class="card-label">
-                <h3>Fotografia</h3>
-                <p>ZobraziZ portfólio</p>
-            </div>
+            <div class="card-label"><h3>Fotografia</h3><p>V príprave</p></div>
         </div>
     </div>
 </section>
@@ -291,46 +245,41 @@
     <h2>Color Grading</h2>
     <p style="opacity: 0.6; margin-bottom: 20px;">Potiahni stredovú čiaru pre porovnanie LOG vs. GRADE.</p>
     
-    <div class="comparison-slider">
-        <img src="pictures/example2.jpg" alt="Graded Version">
+    <div class="comparison-slider" id="slider-box-1">
+        <img src="pictures/example2.jpg" alt="Grade">
         <div class="slider-label label-after">Grade</div>
 
-        <img src="pictures/example1.jpg" alt="Log Version" id="log-image">
+        <img src="pictures/example1.jpg" alt="Log" class="log-image-overlay" id="log-1">
         <div class="slider-label label-before">Log</div>
 
-        <div class="slider-line" id="slider-line"></div>
+        <div class="slider-line" id="line-1"></div>
 
-        <input type="range" min="0" max="100" value="50" class="slider-input" id="main-slider" oninput="moveSlider(this.value)">
+        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-1', 'line-1', 'slider-box-1')">
     </div>
-</div>
 
-<div id="video-content" class="overlay">
-    <div class="close-btn" onclick="closeOverlay('video-content')">✕ ZAVRIEŤ</div>
-    <h2>Video Produkcia</h2>
-    <p>Sekcia vo výstavbe...</p>
-</div>
-
-<div id="foto-content" class="overlay">
-    <div class="close-btn" onclick="closeOverlay('foto-content')">✕ ZAVRIEŤ</div>
-    <h2>Fotografia</h2>
-    <p>Sekcia vo výstavbe...</p>
+    <div class="comparison-slider">
+        <img src="pictures/example4.jpg" alt="Grade">
+        <div class="slider-label label-after">Grade</div>
+        <img src="pictures/example3.jpg" alt="Log" class="log-image-overlay" id="log-2">
+        <div class="slider-label label-before">Log</div>
+        <div class="slider-line" id="line-2"></div>
+        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-2', 'line-2')">
+    </div>
 </div>
 
 <section id="contact">
     <div class="contact-container">
-        <h2>Poďme niečo vytvoriť</h2>
+        <h2>Poďme tvoriť</h2>
         <form>
             <input type="text" placeholder="Meno">
             <input type="email" placeholder="Email">
-            <textarea rows="5" placeholder="Povedz mi o tvojom projekte..."></textarea>
-            <button class="btn" type="button">Odoslať správu</button>
+            <textarea rows="5" placeholder="Tvoj projekt..."></textarea>
+            <button class="btn" type="button">Odoslať</button>
         </form>
     </div>
 </section>
 
-<footer style="text-align: center; padding: 40px; opacity: 0.4;">
-    &copy; 2026 Pavol Kadlečík
-</footer>
+<footer style="text-align: center; padding: 40px; opacity: 0.4;">&copy; 2026 Pavol Kadlečík</footer>
 
 <script>
     function openOverlay(id) {
@@ -338,32 +287,14 @@
         document.body.style.overflow = 'hidden';
         
         if(id === 'extra-content') {
-            const slider = document.getElementById('main-slider');
-            const logImg = document.getElementById('log-image');
-            const line = document.getElementById('slider-line');
+            const firstSlider = document.getElementById('slider-box-1');
+            // Pridáme triedu, ktorá spustí plynulú CSS animáciu
+            firstSlider.classList.add('wiggle-effect');
             
-            // Nastavíme úvodný stav
-            slider.value = 50;
-            moveSlider(50);
-            
-            // Táto animácia automaticky prebehne po otvorení okna a predvedie funkčnosť.
+            // Po skončení animácie (1.8s) ju odstránime, aby neprekážala manuálnemu ovládaniu
             setTimeout(() => {
-                logImg.style.transition = "clip-path 0.8s ease-in-out";
-                line.style.transition = "left 0.8s ease-in-out";
-                
-                slider.value = 80;
-                moveSlider(80);
-                
-                setTimeout(() => {
-                    slider.value = 50;
-                    moveSlider(50);
-                    
-                    setTimeout(() => { 
-                        logImg.style.transition = "none"; 
-                        line.style.transition = "none"; 
-                    }, 800);
-                }, 800);
-            }, 300);
+                firstSlider.classList.remove('wiggle-effect');
+            }, 1800);
         }
     }
 
@@ -372,12 +303,15 @@
         document.body.style.overflow = 'auto';
     }
 
-    function moveSlider(value) {
-        const logImg = document.getElementById('log-image');
-        const sliderLine = document.getElementById('slider-line');
+    function manualMove(value, logId, lineId, boxId) {
+        // Ak používateľ začne hýbať sliderom, okamžite zrušíme automatickú animáciu
+        if(boxId) {
+            document.getElementById(boxId).classList.remove('wiggle-effect');
+        }
         
+        const logImg = document.getElementById(logId);
+        const sliderLine = document.getElementById(lineId);
         const clipValue = 100 - value;
-        // Clip path orezáva sprava.
         logImg.style.clipPath = `inset(0 ${clipValue}% 0 0)`;
         sliderLine.style.left = value + '%';
     }
