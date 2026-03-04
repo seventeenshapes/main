@@ -66,7 +66,7 @@
             margin-top: 10px;
         }
 
-        /* --- SECTION O NÁS (PRE DVOCH) --- */
+        /* --- SECTION O NÁS (UPRAVENÉ PREKLIKY) --- */
         section { padding: 100px 10%; max-width: 1400px; margin: 0 auto; }
 
         .team-grid {
@@ -86,6 +86,19 @@
             align-items: center;
             text-align: center;
             backdrop-filter: blur(10px);
+        }
+
+        /* Štýl pre odkaz v mene */
+        .member-link {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 2px;
+        }
+
+        .member-link:hover {
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
         }
 
         .member-photo {
@@ -247,16 +260,16 @@
     <h2 style="text-align: center; font-size: 2.5rem;">Kto sme?</h2>
     <div class="team-grid">
         <div class="member-card">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400" class="member-photo" alt="Michal">
-            <h3>Michal Borovský</h3>
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400" class="member-photo" alt="Pavol">
+            <h3><a href="Pavol.html" class="member-link">Pavol</a></h3>
             <p>Director & Lead Editor</p>
             <p>Špecialista na dynamický strih a rozprávanie príbehov, ktoré vťahujú diváka do deja.</p>
         </div>
         <div class="member-card">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400" class="member-photo" alt="Peter">
-            <h3>Peter Malý</h3>
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400" class="member-photo" alt="Henika">
+            <h3><a href="henika.html" class="member-link">Henika</a></h3>
             <p>DOP & Colorist</p>
-            <p>Odborník na svetlo a farby. V DaVinci Resolve mení obyčajné zábery na filmové umenie.</p>
+            <p>Odborníčka na vizuálnu identitu a postprodukciu. V DaVinci Resolve mení obyčajné zábery na umenie.</p>
         </div>
     </div>
 </section>
