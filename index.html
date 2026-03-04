@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Duo | Vision Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent: #0070ff; /* Moderná modrá */
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg);
+            color: var(--text); 
+            margin: 0; 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- BACKGROUND DECORATION --- */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 112, 255, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* --- HEADER --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), var(--bg)), 
+                        url('https://images.unsplash.com/photo-1492691523567-30730024d051?auto=format&fit=crop&w=1920'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        header h1 { 
+            font-size: clamp(3rem, 10vw, 6rem); 
+            font-weight: 900; 
+            margin: 0; 
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        .subtitle { 
+            font-size: 1.2rem;
+            letter-spacing: 5px; 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            font-weight: 400;
+            margin-top: 10px;
+        }
+
+        /* --- SECTION O NÁS (PRE DVOCH) --- */
+        section { padding: 100px 10%; max-width: 1400px; margin: 0 auto; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .member-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent);
+            object-fit: cover;
+        }
+
+        .member-card h3 { margin: 10px 0; font-size: 1.8rem; }
+        .member-card p { color: #aaa; font-weight: 300; }
+
+        /* --- BENTO GRID PORTFÓLIO --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 300px);
+            gap: 20px;
+        }
+
+        .bento-item {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .bento-item img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(50%); }
+        .bento-item:hover img { filter: grayscale(0%); transform: scale(1.05); }
+
+        .large { grid-column: span 2; grid-row: span 2; }
+        .wide { grid-column: span 2; }
+
+        .bento-label {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            pointer-events: none;
+        }
+
+        /* --- OVERLAY --- */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5,5,5,0.98);
+            z-index: 2000;
+            display: none;
+            padding: 50px;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 30px; right: 30px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 2001;
+        }
+
+        /* --- SLIDER STYLING --- */
+        .comparison-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 50px auto;
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #before-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            clip-path: inset(0 50% 0 0);
+            z-index: 2;
+        }
+
+        #after-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .slider-bar {
+            position: absolute;
+            top: 0; bottom: 0; left: 50%;
+            width: 4px;
+            background: white;
+            z-index: 3;
+            transform: translateX(-50%);
+        }
+
+        input[type="range"] {
+            position: absolute;
+            top: 0; width: 100%; height: 100%;
+            background: transparent;
+            -webkit-appearance: none;
+            z-index: 4;
+            cursor: ew-resize;
+        }
+
+        /* --- CONTACT --- */
+        .contact-box {
+            background: var(--card-bg);
+            padding: 60px;
+            border-radius: 40px;
+            text-align: center;
+        }
+
+        .contact-box input {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover { box-shadow: 0 0 30px rgba(0, 112, 255, 0.4); }
+
+        /* --- RESPONSIVITY --- */
+        @media (max-width: 900px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+            .large, .wide { grid-column: span 2; height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<header>
+    <div class="subtitle">Creative Production House</div>
+    <h1>VISION DUO</h1>
+</header>
+
+<section id="about">
+    <h2 style="text-align: center; font-size: 2.5rem;">Kto sme?</h2>
+    <div class="team-grid">
+        <div class="member-card">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400" class="member-photo" alt="Michal">
+            <h3>Michal Borovský</h3>
+            <p>Director & Lead Editor</p>
+            <p>Špecialista na dynamický strih a rozprávanie príbehov, ktoré vťahujú diváka do deja.</p>
+        </div>
+        <div class="member-card">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400" class="member-photo" alt="Peter">
+            <h3>Peter Malý</h3>
+            <p>DOP & Colorist</p>
+            <p>Odborník na svetlo a farby. V DaVinci Resolve mení obyčajné zábery na filmové umenie.</p>
+        </div>
+    </div>
+</section>
+
+<section id="work">
+    <h2 style="margin-bottom: 40px;">Naša Práca</h2>
+    <div class="bento-grid">
+        <div class="bento-item large" onclick="openWork('grading')">
+            <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800" alt="Grading">
+            <div class="bento-label">
+                <h3 style="margin:0">Color Grading</h3>
+                <span style="color: var(--accent)">Pred & Po →</span>
+            </div>
+        </div>
+        <div class="bento-item" onclick="openWork('video')">
+            <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=600" alt="Video">
+            <div class="bento-label"><h4>Video Produkcia</h4></div>
+        </div>
+        <div class="bento-item" onclick="openWork('photo')">
+            <img src="https://images.unsplash.com/photo-1452784444945-3f422708fe5e?auto=format&fit=crop&w=600" alt="Foto">
+            <div class="bento-label"><h4>Event Photo</h4></div>
+        </div>
+        <div class="bento-item wide" onclick="openWork('commercial')">
+            <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800" alt="Ads">
+            <div class="bento-label"><h4>Reklamné Kampane</h4></div>
+        </div>
+    </div>
+</section>
+
+<div id="grading-overlay" class="overlay">
+    <button class="close-btn" onclick="closeWork('grading-overlay')">ZAVRIEŤ ✕</button>
+    <h2 style="text-align:center; margin-top: 50px;">Art of Color</h2>
+    <p style="text-align:center; opacity: 0.6;">Potiahni sliderom a uvidíš silu color gradingu.</p>
+    
+    <div class="comparison-container">
+        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1200" id="after-img" alt="After">
+        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1200&sat=-100" id="before-img" alt="Before">
+        <div class="slider-bar" id="bar"></div>
+        <input type="range" min="0" max="100" value="50" oninput="handleSlider(this.value)">
+    </div>
+</div>
+
+<section id="contact">
+    <div class="contact-box">
+        <h2>Máte víziu? Poďme ju zrealizovať.</h2>
+        <p>Momentálne prijímame rezervácie na sezónu 2026.</p>
+        <form>
+            <input type="text" placeholder="Vaše meno"><br>
+            <input type="email" placeholder="Emailová adresa"><br>
+            <button type="button" class="cta-button">Poslať dopyt</button>
+        </form>
+    </div>
+</section>
+
+<footer style="text-align: center; padding: 50px; font-size: 0.9rem; opacity: 0.5;">
+    &copy; 2026 Vision Duo Studio. All rights reserved.
+</footer>
+
+<script>
+    function openWork(type) {
+        if(type === 'grading') {
+            document.getElementById('grading-overlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        } else {
+            alert('Sekcia ' + type + ' je momentálne vo výstavbe.');
+        }
+    }
+
+    function closeWork(id) {
+        document.getElementById(id).style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function handleSlider(val) {
+        const beforeImg = document.getElementById('before-img');
+        const bar = document.getElementById('bar');
+        beforeImg.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
+        bar.style.left = val + '%';
+    }
+</script>
+
+</body>
+</html>
