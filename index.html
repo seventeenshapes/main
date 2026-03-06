@@ -23,6 +23,7 @@
             margin: 0; 
             overflow-x: hidden;
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         /* --- BACKGROUND DECORATION --- */
@@ -34,6 +35,43 @@
             z-index: -1;
         }
 
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 25px 0;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.8), transparent);
+            backdrop-filter: blur(5px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.85rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
         /* --- HEADER --- */
         header {
             height: 100vh;
@@ -42,7 +80,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), var(--bg)), 
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--bg)), 
                         url('https://images.unsplash.com/photo-1492691523567-30730024d051?auto=format&fit=crop&w=1920'); 
             background-size: cover;
             background-position: center;
@@ -66,7 +104,7 @@
             margin-top: 10px;
         }
 
-        /* --- SECTION O NÁS (UPRAVENÉ PREKLIKY) --- */
+        /* --- SECTIONS --- */
         section { padding: 100px 10%; max-width: 1400px; margin: 0 auto; }
 
         .team-grid {
@@ -88,12 +126,10 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Štýl pre odkaz v mene */
         .member-link {
             color: var(--text);
             text-decoration: none;
             border-bottom: 2px solid transparent;
-            padding-bottom: 2px;
         }
 
         .member-link:hover {
@@ -113,7 +149,7 @@
         .member-card h3 { margin: 10px 0; font-size: 1.8rem; }
         .member-card p { color: #aaa; font-weight: 300; }
 
-        /* --- BENTO GRID PORTFÓLIO --- */
+        /* --- BENTO GRID PORTFOLIO --- */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -143,7 +179,7 @@
             pointer-events: none;
         }
 
-        /* --- OVERLAY --- */
+        /* --- OVERLAY & SLIDER --- */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -167,7 +203,6 @@
             z-index: 2001;
         }
 
-        /* --- SLIDER STYLING --- */
         .comparison-container {
             width: 100%;
             max-width: 900px;
@@ -241,6 +276,8 @@
 
         /* --- RESPONSIVITY --- */
         @media (max-width: 900px) {
+            nav ul { gap: 15px; }
+            nav ul li a { font-size: 0.7rem; letter-spacing: 1px; }
             .team-grid { grid-template-columns: 1fr; }
             .bento-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
             .large, .wide { grid-column: span 2; height: 300px; }
@@ -250,6 +287,16 @@
 <body>
 
 <div class="bg-glow"></div>
+
+<nav>
+    <ul>
+        <li><a href="#">Úvod</a></li>
+        <li><a href="#about">O nás</a></li>
+        <li><a href="#work">Fotoalbum</a></li>
+        <li><a href="#work">Videá</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+    </ul>
+</nav>
 
 <header>
     <div class="subtitle">Creative Production House</div>
@@ -275,26 +322,26 @@
 </section>
 
 <section id="work">
-    <h2 style="margin-bottom: 40px;">Naša Práca</h2>
+    <h2 style="margin-bottom: 40px;">Naša práca</h2>
     <div class="bento-grid">
         <div class="bento-item large" onclick="openWork('grading')">
             <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800" alt="Grading">
             <div class="bento-label">
-                <h3 style="margin:0">Color Grading</h3>
+                <h3 style="margin:0">Color grading</h3>
                 <span style="color: var(--accent)">Pred & Po →</span>
             </div>
         </div>
         <div class="bento-item" onclick="openWork('video')">
             <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=600" alt="Video">
-            <div class="bento-label"><h4>Video Produkcia</h4></div>
+            <div class="bento-label"><h4>Video produkcia</h4></div>
         </div>
         <div class="bento-item" onclick="openWork('photo')">
             <img src="https://images.unsplash.com/photo-1452784444945-3f422708fe5e?auto=format&fit=crop&w=600" alt="Foto">
-            <div class="bento-label"><h4>Event Photo</h4></div>
+            <div class="bento-label"><h4>Eventová fotografia</h4></div>
         </div>
         <div class="bento-item wide" onclick="openWork('commercial')">
             <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800" alt="Ads">
-            <div class="bento-label"><h4>Reklamné Kampane</h4></div>
+            <div class="bento-label"><h4>Reklamné kampane</h4></div>
         </div>
     </div>
 </section>
@@ -318,14 +365,14 @@
         <p>Momentálne prijímame rezervácie na sezónu 2026.</p>
         <form>
             <input type="text" placeholder="Vaše meno"><br>
-            <input type="email" placeholder="Emailová adresa"><br>
+            <input type="email" placeholder="E-mailová adresa"><br>
             <button type="button" class="cta-button">Poslať dopyt</button>
         </form>
     </div>
 </section>
 
 <footer style="text-align: center; padding: 50px; font-size: 0.9rem; opacity: 0.5;">
-    &copy; 2026 Vision Duo Studio. All rights reserved.
+    &copy; 2026 Vision Duo Studio. Všetky práva vyhradené.
 </footer>
 
 <script>
