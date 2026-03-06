@@ -79,12 +79,30 @@
             transition: 0.4s ease;
             border: 1px solid rgba(255,255,255,0.1);
             height: 400px;
+            background: #000;
         }
         .category-card:hover { transform: scale(1.02); border-color: var(--accent); }
-        .category-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; transition: 0.5s; }
-        .category-card:hover img { opacity: 0.7; }
+        
+        .category-card img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            opacity: 0.5; 
+            transition: 0.5s; 
+        }
+        .category-card:hover img { opacity: 0.2; }
 
-        .card-label { position: absolute; bottom: 30px; left: 30px; }
+        .category-card video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: 0.5s ease-in-out;
+            pointer-events: none;
+        }
+        .category-card:hover video { opacity: 1; }
+
+        .card-label { position: absolute; bottom: 30px; left: 30px; z-index: 5; }
         .card-label h3 { font-size: 1.5rem; margin: 0; text-transform: uppercase; }
         .card-label p { color: var(--accent); letter-spacing: 2px; font-weight: bold; font-size: 0.8rem; margin: 5px 0 0 0; }
 
@@ -154,27 +172,19 @@
             z-index: 10;
         }
 
-        /* --- PLYNULÁ ANIMÁCIA (EASE-IN-OUT) --- */
+        /* --- ANIMÁCIA --- */
         .wiggle-effect .slider-line {
             animation: lineWiggle 1.8s cubic-bezier(0.45, 0, 0.55, 1);
         }
-
         .wiggle-effect .log-image-overlay {
             animation: clipWiggle 1.8s cubic-bezier(0.45, 0, 0.55, 1);
         }
 
         @keyframes lineWiggle {
-            0% { left: 50%; }
-            30% { left: 70%; }
-            60% { left: 30%; }
-            100% { left: 50%; }
+            0% { left: 50%; } 30% { left: 70%; } 60% { left: 30%; } 100% { left: 50%; }
         }
-
         @keyframes clipWiggle {
-            0% { clip-path: inset(0 50% 0 0); }
-            30% { clip-path: inset(0 30% 0 0); }
-            60% { clip-path: inset(0 70% 0 0); }
-            100% { clip-path: inset(0 50% 0 0); }
+            0% { clip-path: inset(0 50% 0 0); } 30% { clip-path: inset(0 30% 0 0); } 60% { clip-path: inset(0 70% 0 0); } 100% { clip-path: inset(0 50% 0 0); }
         }
 
         .slider-label {
@@ -222,17 +232,23 @@
 <section>
     <h2>Vybraná tvorba</h2>
     <div class="main-grid">
-        <div class="category-card" onclick="openOverlay('extra-content')">
-            <img src="https://images.unsplash.com/photo-1535016120720-40c646bebbbb?auto=format&fit=crop&w=800">
+        <div class="category-card" 
+             onclick="openOverlay('extra-content')" 
+             onmouseenter="this.querySelector('video').play()" 
+             onmouseleave="this.querySelector('video').pause()">
+            <video src="url odkazy/color.mp4" muted loop playsinline></video>
+            <img src="obrazky/color wheel.png">
             <div class="card-label">
                 <h3>Color Grading</h3>
                 <p>Zobraziť porovnanie</p>
             </div>
         </div>
+
         <div class="category-card" onclick="openOverlay('video-content')">
             <img src="https://images.unsplash.com/photo-1492691523567-30730024d051?auto=format&fit=crop&w=800">
             <div class="card-label"><h3>Video Produkcia</h3><p>V príprave</p></div>
         </div>
+        
         <div class="category-card" onclick="openOverlay('foto-content')">
             <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800">
             <div class="card-label"><h3>Fotografia</h3><p>V príprave</p></div>
@@ -248,12 +264,9 @@
     <div class="comparison-slider" id="slider-box-1">
         <img src="obrazky/example2.jpg" alt="Grade">
         <div class="slider-label label-after">Grade</div>
-
         <img src="obrazky/example1.jpg" alt="Log" class="log-image-overlay" id="log-1">
         <div class="slider-label label-before">Log</div>
-
         <div class="slider-line" id="line-1"></div>
-
         <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-1', 'line-1', 'slider-box-1')">
     </div>
 
@@ -264,6 +277,24 @@
         <div class="slider-label label-before">Log</div>
         <div class="slider-line" id="line-2"></div>
         <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-2', 'line-2')">
+    </div>
+
+    <div class="comparison-slider">
+        <img src="obrazky/example6.jpg" alt="Grade">
+        <div class="slider-label label-after">Grade</div>
+        <img src="obrazky/example5.jpg" alt="Log" class="log-image-overlay" id="log-3">
+        <div class="slider-label label-before">Log</div>
+        <div class="slider-line" id="line-3"></div>
+        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-3', 'line-3')">
+    </div>
+
+    <div class="comparison-slider">
+        <img src="obrazky/example8.jpg" alt="Grade">
+        <div class="slider-label label-after">Grade</div>
+        <img src="obrazky/example7.jpg" alt="Log" class="log-image-overlay" id="log-4">
+        <div class="slider-label label-before">Log</div>
+        <div class="slider-line" id="line-4"></div>
+        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-4', 'line-4')">
     </div>
 </div>
 
@@ -283,15 +314,14 @@
 
 <script>
     function openOverlay(id) {
-        document.getElementById(id).style.display = 'block';
+        let el = document.getElementById(id);
+        if(!el) return;
+        el.style.display = 'block';
         document.body.style.overflow = 'hidden';
         
         if(id === 'extra-content') {
             const firstSlider = document.getElementById('slider-box-1');
-            // Pridáme triedu, ktorá spustí plynulú CSS animáciu
             firstSlider.classList.add('wiggle-effect');
-            
-            // Po skončení animácie (1.8s) ju odstránime, aby neprekážala manuálnemu ovládaniu
             setTimeout(() => {
                 firstSlider.classList.remove('wiggle-effect');
             }, 1800);
@@ -304,7 +334,6 @@
     }
 
     function manualMove(value, logId, lineId, boxId) {
-        // Ak používateľ začne hýbať sliderom, okamžite zrušíme automatickú animáciu
         if(boxId) {
             document.getElementById(boxId).classList.remove('wiggle-effect');
         }
