@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pavol Kadlečík | Portfólio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap" rel="stylesheet">
+    <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700;900&display=swap)" rel="stylesheet">
     
     <style>
         :root {
@@ -196,6 +196,52 @@
         .label-before { left: 20px; color: var(--accent); }
         .label-after { right: 20px; }
 
+        /* --- LINK LIST STYLE --- */
+        .link-list {
+            max-width: 800px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .item-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px 40px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .item-link:hover {
+            transform: translateX(15px);
+            border-color: var(--accent);
+            background: #222;
+        }
+
+        .item-link span {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .item-link .arrow {
+            color: var(--accent);
+            font-size: 1.8rem;
+            transition: 0.3s;
+        }
+
+        .item-link:hover .arrow {
+            transform: translateX(10px);
+        }
+
+        /* --- KONTAKT --- */
         .contact-container {
             background: rgba(255,255,255,0.03);
             padding: 50px;
@@ -208,6 +254,7 @@
         @media (max-width: 900px) { 
             .about-container { flex-direction: column; text-align: center; }
             .main-grid { grid-template-columns: 1fr; } 
+            .item-link span { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -245,17 +292,24 @@
         </div>
 
         <div class="category-card" onclick="openOverlay('video-content')">
-            <img src="https://images.unsplash.com/photo-1492691523567-30730024d051?auto=format&fit=crop&w=800">
-            <div class="card-label"><h3>Video Produkcia</h3><p>V príprave</p></div>
+            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1492691523567-30730024d051?auto=format&fit=crop&w=800)">
+            <div class="card-label">
+                <h3>Video Produkcia</h3>
+                <p>Otvoriť portfólio</p>
+            </div>
         </div>
         
         <div class="category-card" onclick="openOverlay('foto-content')">
-            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800">
-            <div class="card-label"><h3>Fotografia</h3><p>V príprave</p></div>
+            <img src="[images.unsplash.com](https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800)">
+            <div class="card-label">
+                <h3>Fotografia</h3>
+                <p>Zobraziť Instagram</p>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- COLOR GRADING OVERLAY -->
 <div id="extra-content" class="overlay">
     <div class="close-btn" onclick="closeOverlay('extra-content')">✕ ZAVRIEŤ</div>
     <h2>Color Grading</h2>
@@ -298,7 +352,38 @@
     </div>
 </div>
 
+<!-- VIDEO PRODUKCIA OVERLAY -->
+<div id="video-content" class="overlay">
+    <div class="close-btn" onclick="closeOverlay('video-content')">✕ ZAVRIEŤ</div>
+    <h2>Video Produkcia</h2>
+    <p style="opacity: 0.5; margin-bottom: 40px;">Kliknutím na projekt budete presmerovaní na YouTube.</p>
+    
+    <div class="link-list">
+        <a href="https://www.youtube.com/watch?v=xQP4GPARpig&list=PLZwirSTu57W_6KEO0FGDVwnnLSlNYEb7W" target="_blank" class="item-link">
+            <span>Zoznam podcastov Simple Me</span>
+            <div class="arrow">→</div>
+        </a>
 
+        <a href="https://www.youtube.com/watch?v=_wZ-R9jYIyY" target="_blank" class="item-link">
+            <span>Truck Country Lodenica</span>
+            <div class="arrow">→</div>
+        </a>
+    </div>
+</div>
+
+<!-- FOTOGRAFIA OVERLAY -->
+<div id="foto-content" class="overlay">
+    <div class="close-btn" onclick="closeOverlay('foto-content')">✕ ZAVRIEŤ</div>
+    <h2>Fotografia</h2>
+    <p style="opacity: 0.5; margin-bottom: 40px;">Moje najnovšie fotky a vizuálnu tvorbu nájdeš na Instagrame.</p>
+    
+    <div class="link-list">
+        <a href="https://www.instagram.com/pav0lkadlecik/" target="_blank" class="item-link">
+            <span>Instagram @pav0lkadlecik</span>
+            <div class="arrow">→</div>
+        </a>
+    </div>
+</div>
 
 <footer style="text-align: center; padding: 40px; opacity: 0.4;">&copy; 2026 Pavol Kadlečík</footer>
 
@@ -311,10 +396,12 @@
         
         if(id === 'extra-content') {
             const firstSlider = document.getElementById('slider-box-1');
-            firstSlider.classList.add('wiggle-effect');
-            setTimeout(() => {
-                firstSlider.classList.remove('wiggle-effect');
-            }, 1800);
+            if(firstSlider) {
+                firstSlider.classList.add('wiggle-effect');
+                setTimeout(() => {
+                    firstSlider.classList.remove('wiggle-effect');
+                }, 1800);
+            }
         }
     }
 
@@ -331,8 +418,8 @@
         const logImg = document.getElementById(logId);
         const sliderLine = document.getElementById(lineId);
         const clipValue = 100 - value;
-        logImg.style.clipPath = `inset(0 ${clipValue}% 0 0)`;
-        sliderLine.style.left = value + '%';
+        if(logImg) logImg.style.clipPath = `inset(0 ${clipValue}% 0 0)`;
+        if(sliderLine) sliderLine.style.left = value + '%';
     }
 </script>
 
