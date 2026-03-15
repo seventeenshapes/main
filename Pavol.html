@@ -242,19 +242,62 @@
         }
 
         /* --- KONTAKT --- */
-        .contact-container {
-            background: rgba(255,255,255,0.03);
-            padding: 50px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+       footer { 
+            background: var(--card-bg);
+            padding: 80px 10% 40px 10%; 
+            text-align: center;
+            border-top: 1px solid rgba(230, 220, 210, 0.1);
         }
-        input, textarea { width: 100%; padding: 15px; margin-bottom: 20px; background: #111; border: 1px solid #333; color: white; border-radius: 5px; }
-        .btn { background: var(--accent); color: white; padding: 15px 40px; border: none; font-weight: bold; cursor: pointer; border-radius: 50px; }
+
+        .footer-contacts {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+
+        .contact-item {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-item i {
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        .contact-item:hover {
+            color: var(--accent);
+        }
+
+        /* Upravená veľkosť pre Instagram link */
+        .instagram-link {
+            font-size: 1.1rem !important; /* Rovnaká veľkosť ako ostatné texty */
+        }
+        
+        .instagram-link i {
+            font-size: 1.8rem; /* Ikona zostáva mierne väčšia pre vizuálnu rovnováhu */
+        }
+
+        .copyright {
+            opacity: 0.5;
+            font-size: 0.85rem;
+            margin-top: 40px;
+            letter-spacing: 1px;
+            color: #e2ddda;
+        }
 
         @media (max-width: 900px) { 
             .about-container { flex-direction: column; text-align: center; }
             .main-grid { grid-template-columns: 1fr; } 
-            .item-link span { font-size: 1.1rem; }
+            .footer-contacts { flex-direction: column; gap: 20px; }
         }
     </style>
 </head>
@@ -386,7 +429,50 @@
     </div>
 </div>
 
-<footer style="text-align: center; padding: 40px; opacity: 0.4;">&copy; 2026 Pavol Kadlečík</footer>
+<footer>
+    <h2>Kontakt</h2>
+    <div class="footer-contacts">
+        <a href="tel:+421948134065" class="contact-item">
+            <i class="fas fa-phone"></i> +421 948 134 065
+        </a>
+        
+        <a href="mailto:kadlecik.pavolkp@gmail.com" class="contact-item">
+            <i class="fas fa-envelope"></i> kadlecik.pavolkp@gmail.com
+        </a>
+
+        <a href="https://www.instagram.com/better_perkyy/" target="_blank" class="contact-item instagram-link">
+            <i class="fab fa-instagram"></i> better_perkyy
+        </a>
+    </div>
+
+    <div class="copyright">
+        &copy; 2026 Pavol Kadlečík | Všetky práva vyhradené
+    </div>
+</footer>
+
+<script>
+    function openOverlay(id) {
+        const overlay = document.getElementById(id);
+        overlay.style.display = 'block';
+        setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeOverlay(id) {
+        const overlay = document.getElementById(id);
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.display = 'none'; }, 400);
+        document.body.style.overflow = 'auto';
+    }
+
+    function manualMove(value, logId, lineId, boxId) {
+        const logImg = document.getElementById(logId);
+        const sliderLine = document.getElementById(lineId);
+        const clipValue = 100 - value;
+        logImg.style.clipPath = `inset(0 ${clipValue}% 0 0)`;
+        sliderLine.style.left = value + '%';
+    }
+</script>
 
 <script>
     function openOverlay(id) {
