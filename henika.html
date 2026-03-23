@@ -69,7 +69,7 @@
         h2 { font-size: 2.5rem; margin-bottom: 50px; display: flex; align-items: center; text-transform: uppercase; }
         h2::after { content: ""; height: 2px; flex-grow: 1; background: var(--accent); margin-left: 20px; opacity: 0.3; }
 
-        /* --- GRID --- */
+        /* --- HLAVNÁ MRIEŽKA KATEGÓRIÍ --- */
         .main-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -94,7 +94,7 @@
         .card-label h3 { font-size: 1.4rem; margin: 0; text-transform: uppercase; }
         .card-label p { color: var(--accent); letter-spacing: 2px; font-weight: bold; font-size: 0.8rem; margin: 5px 0 0 0; }
 
-        /* --- OVERLAY & SLIDER --- */
+        /* --- OVERLAY & MRIEŽKA FOTOGRAFIÍ --- */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -102,7 +102,7 @@
             z-index: 1000;
             display: none;
             overflow-y: auto;
-            padding: 80px 10%;
+            padding: 100px 5%;
             opacity: 0;
         }
 
@@ -119,16 +119,24 @@
         }
         .close-btn:hover { background: var(--accent); transform: scale(1.05); }
 
+        /* Nový kontajner pre mriežku sliderov */
+        .slider-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 stĺpce na PC */
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
         .comparison-slider {
             position: relative;
             width: 100%;
-            max-width: 1000px;
-            margin: 40px auto 80px auto; 
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 4 / 5; /* Vertikálny formát */
             overflow: hidden;
             border-radius: 15px;
             border: 5px solid #ffffff;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: #eee;
         }
 
         .comparison-slider img {
@@ -140,16 +148,17 @@
 
         .log-image-overlay {
             z-index: 2;
-            clip-path: inset(0 50% 0 0); 
+            clip-path: inset(0 0 50% 0); 
         }
 
         .slider-line {
             position: absolute;
-            top: 0; left: 50%; width: 4px; height: 100%;
+            top: 50%; left: 0; width: 100%; height: 4px;
             background: var(--accent);
             z-index: 5;
-            transform: translateX(-50%);
+            transform: translateY(-50%);
             pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .slider-input {
@@ -157,9 +166,11 @@
             top: 0; left: 0; width: 100%; height: 100%;
             background: transparent;
             opacity: 0;
-            cursor: ew-resize;
+            cursor: ns-resize;
             z-index: 10;
             margin: 0;
+            -webkit-appearance: slider-vertical;
+            appearance: slider-vertical;
         }
 
         /* --- FOOTER & CONTACT --- */
@@ -189,23 +200,8 @@
             gap: 12px;
         }
 
-        .contact-item i {
-            color: var(--accent);
-            font-size: 1.4rem;
-        }
-
-        .contact-item:hover {
-            color: var(--accent);
-        }
-
-        /* Upravená veľkosť pre Instagram link */
-        .instagram-link {
-            font-size: 1.1rem !important; /* Rovnaká veľkosť ako ostatné texty */
-        }
-        
-        .instagram-link i {
-            font-size: 1.8rem; /* Ikona zostáva mierne väčšia pre vizuálnu rovnováhu */
-        }
+        .contact-item i { color: var(--accent); font-size: 1.4rem; }
+        .contact-item:hover { color: var(--accent); }
 
         .copyright {
             opacity: 0.5;
@@ -215,10 +211,16 @@
             color: #2d241e;
         }
 
-        @media (max-width: 900px) { 
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 1200px) {
+            .slider-grid { grid-template-columns: repeat(2, 1fr); } /* 2 stĺpce pre tablety */
+        }
+
+        @media (max-width: 800px) {
             .about-container { flex-direction: column; text-align: center; }
             .main-grid { grid-template-columns: 1fr; } 
-            .footer-contacts { flex-direction: column; gap: 20px; }
+            .slider-grid { grid-template-columns: 1fr; max-width: 450px; } /* 1 stĺpec pre mobily */
+            .close-btn { right: 20px; padding: 10px 20px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -235,7 +237,7 @@
             <img src="obrazky/profilovka2.jpg" alt="Henrieta Horváthová">
         </div>
         <div class="about-text">
-            Volám sa <strong>Henrieta</strong> a študujem na Strednej priemyselnej škole elektrotechnickej odbor multimédiá. Moja vášeň spočíva v zachytávaní spomienok v podobe fotografií a následnej korekcii vzhľadu v programe Adobe Lightroom. Taktiež sa venujem tvorbe videí a grafickému dizajnu. Som otvorená rôznym nápadom.
+            Volám sa <strong>Henrieta</strong> a študujem na Strednej priemyselnej škole elektrotechnickej odbor multimédiá. Moja vášeň spočíva v zachytávaní spomienok v podobe fotografií a následnej korekcii vzhľadu v programu Adobe Lightroom. Taktiež sa venujem tvorbe videí a grafickému dizajnu. Som otvorená rôznym nápadom.
         </div>
     </div>
 </section>
@@ -263,35 +265,39 @@
 
 <div id="extra-content" class="overlay">
     <div class="close-btn" onclick="closeOverlay('extra-content')">✕ ZAVRIEŤ</div>
-    <h2>Fotografie</h2>
-    <p style="opacity: 0.7; margin-bottom: 30px;">Potiahni stredovú čiaru pre porovnanie RAW - surový obrázok (vľavo) a JPG - upravený obrázok (vpravo). Všetky fotografie nájdeš na mojom instagrame.</p>
+    <div style="text-align: center; margin-bottom: 50px;">
+        <h2>Fotografie</h2>
+        <p style="opacity: 0.7;">Porovnanie RAW (hore) a JPG (dole). Potiahni čiaru vertikálne.</p>
+    </div>
     
-    <div class="comparison-slider" id="slider-box-1">
-        <img src="obrazky/fotka_2.jpg" alt="Grade">
-        <img src="obrazky/fotka_1.jpg" alt="Log" class="log-image-overlay" id="log-1">
-        <div class="slider-line" id="line-1"></div>
-        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-1', 'line-1', 'slider-box-1')">
-    </div>
+    <div class="slider-grid">
+        <div class="comparison-slider">
+            <img src="obrazky/fotka_2.jpg" alt="JPG">
+            <img src="obrazky/fotka_1.jpg" alt="RAW" class="log-image-overlay" id="log-1">
+            <div class="slider-line" id="line-1"></div>
+            <input type="range" min="0" max="100" value="50" orient="vertical" class="slider-input" oninput="manualMove(this.value, 'log-1', 'line-1')">
+        </div>
 
-    <div class="comparison-slider" id="slider-box-2">
-        <img src="obrazky/fotka_4.jpg" alt="Grade">
-        <img src="obrazky/fotka__3.jpg" alt="Log" class="log-image-overlay" id="log-2">
-        <div class="slider-line" id="line-2"></div>
-        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-2', 'line-2', 'slider-box-2')">
-    </div>
+        <div class="comparison-slider">
+            <img src="obrazky/fotka_4.jpg" alt="JPG">
+            <img src="obrazky/fotka__3.jpg" alt="RAW" class="log-image-overlay" id="log-2">
+            <div class="slider-line" id="line-2"></div>
+            <input type="range" min="0" max="100" value="50" orient="vertical" class="slider-input" oninput="manualMove(this.value, 'log-2', 'line-2')">
+        </div>
 
-    <div class="comparison-slider" id="slider-box-3">
-        <img src="obrazky/fotka_6.jpg" alt="Grade">
-        <img src="obrazky/fotka_5.jpg" alt="Log" class="log-image-overlay" id="log-3">
-        <div class="slider-line" id="line-3"></div>
-        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-3', 'line-3', 'slider-box-3')">
-    </div>
+        <div class="comparison-slider">
+            <img src="obrazky/fotka_6.jpg" alt="JPG">
+            <img src="obrazky/fotka_5.jpg" alt="RAW" class="log-image-overlay" id="log-3">
+            <div class="slider-line" id="line-3"></div>
+            <input type="range" min="0" max="100" value="50" orient="vertical" class="slider-input" oninput="manualMove(this.value, 'log-3', 'line-3')">
+        </div>
 
-    <div class="comparison-slider" id="slider-box-4">
-        <img src="obrazky/fotka_8.jpg" alt="Grade">
-        <img src="obrazky/fotka_7.jpg" alt="Log" class="log-image-overlay" id="log-4">
-        <div class="slider-line" id="line-4"></div>
-        <input type="range" min="0" max="100" value="50" class="slider-input" oninput="manualMove(this.value, 'log-4', 'line-4', 'slider-box-4')">
+        <div class="comparison-slider">
+            <img src="obrazky/fotka_8.jpg" alt="JPG">
+            <img src="obrazky/fotka_7.jpg" alt="RAW" class="log-image-overlay" id="log-4">
+            <div class="slider-line" id="line-4"></div>
+            <input type="range" min="0" max="100" value="50" orient="vertical" class="slider-input" oninput="manualMove(this.value, 'log-4', 'line-4')">
+        </div>
     </div>
 </div>
 
@@ -301,16 +307,13 @@
         <a href="tel:+421904907744" class="contact-item">
             <i class="fas fa-phone"></i> +421 904 907 744
         </a>
-        
         <a href="mailto:henrieta.horvathova17@gmail.com" class="contact-item">
             <i class="fas fa-envelope"></i> henrieta.horvathova17@gmail.com
         </a>
-
-        <a href="https://www.instagram.com/henika_photos/" target="_blank" class="contact-item instagram-link">
+        <a href="https://www.instagram.com/henika_photos/" target="_blank" class="contact-item">
             <i class="fab fa-instagram"></i> henika_photos
         </a>
     </div>
-
     <div class="copyright">
         &copy; 2026 Henrieta Horváthová | Všetky práva vyhradené
     </div>
@@ -331,12 +334,12 @@
         document.body.style.overflow = 'auto';
     }
 
-    function manualMove(value, logId, lineId, boxId) {
+    function manualMove(value, logId, lineId) {
         const logImg = document.getElementById(logId);
         const sliderLine = document.getElementById(lineId);
-        const clipValue = 100 - value;
-        logImg.style.clipPath = `inset(0 ${clipValue}% 0 0)`;
-        sliderLine.style.left = value + '%';
+        const topPercent = 100 - value;
+        logImg.style.clipPath = `inset(0 0 ${value}% 0)`;
+        sliderLine.style.top = topPercent + '%';
     }
 </script>
 
